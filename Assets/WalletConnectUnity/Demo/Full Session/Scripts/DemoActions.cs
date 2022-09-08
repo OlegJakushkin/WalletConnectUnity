@@ -41,26 +41,16 @@ public class DemoActions : WalletConnectActions
     }
     
     public async void OnClickSwitchChain(){
-        try{
-            var chainId = new EthChainData();
-            chainId.chainId = "0x13881";
-            var results = await WalletSwitchEthChain(chainId);
-        } catch {
-            //If the client rejected or doesn't have that chain, try to add it.
-            addEthChain();
-        }
-    }
-
-    public async void addEthChain(){
         List<string> list = new List<string>();
-            list.Add("https://rpc-mumbai.maticvigil.com/");
-            var chainData = new EthChainData(){
-                chainId = "0x13881",
-                chainName = "Mumbai Testnet",
+            list.Add("https://rpc.ankr.com/eth_rinkeby");
+            list.Add("https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161");
+        var chainData = new EthChainData(){
+                chainId = "0x4",
+                chainName = "Rinkeby",
                 rpcUrls = list.ToArray(),
                 nativeCurrency = new NativeCurrency(){
-                    name = "MATIC",
-                    symbol = "MATIC",
+                    name = "ETH",
+                    symbol = "ETH",
                     decimals = 18
                 }
             };
@@ -85,7 +75,7 @@ public class DemoActions : WalletConnectActions
             to = address,
             gas = "21000",
             value = "0",
-            chainId = 2,
+            chainId = 4,
         };
 
         var results = await SendTransaction(transaction);
@@ -104,7 +94,7 @@ public class DemoActions : WalletConnectActions
             to = address,
             gas = "21000",
             value = "0",
-            chainId = 2,
+            chainId = 4,
             nonce = "0",
             gasPrice = "50000000000"
         };
@@ -127,7 +117,6 @@ public class DemoActions : WalletConnectActions
 
     public async void OnClickDisconnectAndConnect()
     {
-        bool shouldConnect = !WalletConnect.Instance.createNewSessionOnSessionDisconnect;
-        CloseSession(shouldConnect);
+        CloseSession(true);
     }
 }
