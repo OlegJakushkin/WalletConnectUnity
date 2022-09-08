@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
+using WalletConnectSharp.Core.Utils;
 
 namespace WalletConnectSharp.Core.Network
 {
+
     public static class DefaultBridge
     {
         public static string Domain = "walletconnect.org";
-        
+
         public static string MainBridge = "https://bridge.walletconnect.org";
 
         public const string AlphaNumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -33,10 +35,7 @@ namespace WalletConnectSharp.Core.Network
 
         public static string[] AlternateBridges
         {
-            get
-            {
-                return Bridges;
-            }
+            get { return Bridges; }
         }
 
         public static string[] AllBridges
@@ -62,8 +61,17 @@ namespace WalletConnectSharp.Core.Network
         public static string GetBridgeUrl(string url)
         {
             if (ExtractRootDomain(url) == Domain)
-                return ChooseRandomBridge();
+            {
+                var chosen = ChooseRandomBridge();
+                if (url.StartsWith(UriSchemes.UriSchemeWss))
+                    chosen = chosen.Replace(Uri.UriSchemeHttps, UriSchemes.UriSchemeWss);
+                else if (url.StartsWith(UriSchemes.UriSchemeWs))
+                    chosen = chosen.Replace(Uri.UriSchemeHttp, UriSchemes.UriSchemeWs);
+                return chosen;
+            }
+
             return url;
         }
     }
+
 }

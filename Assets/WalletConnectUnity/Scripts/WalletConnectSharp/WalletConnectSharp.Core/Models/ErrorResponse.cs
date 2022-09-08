@@ -1,5 +1,6 @@
 namespace WalletConnectSharp.Core.Models
 {
+
     public class ErrorResponse
     {
         //keep for json deserialization
@@ -9,4 +10,5 @@ namespace WalletConnectSharp.Core.Models
 
         public string Message => message;
     }
+
 }

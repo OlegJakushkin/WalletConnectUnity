@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace WalletConnectSharp.Core.Events
 {
+
     public class EventFactory
     {
         private static EventFactory _instance;
-        
+
         private Dictionary<Type, IEventProvider> _eventProviders = new Dictionary<Type, IEventProvider>();
 
         public static EventFactory Instance
@@ -17,6 +18,7 @@ namespace WalletConnectSharp.Core.Events
                 {
                     _instance = new EventFactory();
                 }
+
                 return _instance;
             }
         }
@@ -27,7 +29,7 @@ namespace WalletConnectSharp.Core.Events
 
             if (_eventProviders.ContainsKey(t))
                 return;
-            
+
             _eventProviders.Add(t, provider);
         }
 
@@ -40,4 +42,5 @@ namespace WalletConnectSharp.Core.Events
             return null;
         }
     }
+
 }

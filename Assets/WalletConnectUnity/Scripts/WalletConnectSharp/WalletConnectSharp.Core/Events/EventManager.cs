@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace WalletConnectSharp.Core.Events
 {
+
     public class EventManager<T, TEventArgs> : IEventProvider where TEventArgs : IEvent<T>, new()
     {
         private static EventManager<T, TEventArgs> _instance;
@@ -12,24 +11,24 @@ namespace WalletConnectSharp.Core.Events
 
         public static EventManager<T, TEventArgs> Instance
         {
-            get 
+            get
             {
                 if (_instance == null)
                 {
                     _instance = new EventManager<T, TEventArgs>();
                 }
-                
-                return _instance; 
+
+                return _instance;
             }
         }
 
         private EventManager()
         {
             EventTriggers = new EventHandlerMap<TEventArgs>(CallbackBeforeExecuted);
-            
+
             EventFactory.Instance.Register<T>(this);
         }
-        
+
         private void CallbackBeforeExecuted(object sender, TEventArgs e)
         {
         }

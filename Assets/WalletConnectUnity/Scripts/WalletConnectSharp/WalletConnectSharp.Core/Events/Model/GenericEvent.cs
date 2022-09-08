@@ -2,6 +2,7 @@ using System;
 
 namespace WalletConnectSharp.Core.Events
 {
+
     public class GenericEvent<T> : IEvent<T>
     {
         public T Response { get; private set; }
@@ -12,8 +13,9 @@ namespace WalletConnectSharp.Core.Events
             {
                 throw new ArgumentException("Response was already set");
             }
-            
+
             Response = response;
         }
     }
+
 }

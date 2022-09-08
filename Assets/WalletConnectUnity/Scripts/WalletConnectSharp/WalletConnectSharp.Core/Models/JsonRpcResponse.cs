@@ -2,16 +2,14 @@ using Newtonsoft.Json;
 
 namespace WalletConnectSharp.Core.Models
 {
+
     public class JsonRpcResponse : IEventSource
     {
-        [JsonProperty]
-        private long id;
-        
-        [JsonProperty]
-        private string jsonrpc = "2.0";
+        [JsonProperty] private long id;
 
-        [JsonProperty]
-        private JsonRpcError error;
+        [JsonProperty] private string jsonrpc = "2.0";
+
+        [JsonProperty] private JsonRpcError error;
 
         [JsonIgnore]
         public JsonRpcError Error
@@ -39,11 +37,9 @@ namespace WalletConnectSharp.Core.Models
 
         public class JsonRpcError
         {
-            [JsonProperty]
-            private int? code;
-            
-            [JsonProperty]
-            private string message;
+            [JsonProperty] private int? code;
+
+            [JsonProperty] private string message;
 
             [JsonIgnore]
             public int? Code
@@ -64,4 +60,5 @@ namespace WalletConnectSharp.Core.Models
             get { return "response:" + ID; }
         }
     }
+
 }

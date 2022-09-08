@@ -1,5 +1,6 @@
 namespace WalletConnectSharp.Core.Models
 {
+
     public class Address
     {
         public string _address;
@@ -17,4 +18,5 @@ namespace WalletConnectSharp.Core.Models
             return _address;
         }
     }
+
 }

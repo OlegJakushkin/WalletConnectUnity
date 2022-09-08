@@ -2,19 +2,20 @@ using Newtonsoft.Json;
 
 namespace WalletConnectSharp.Core.Models
 {
+
     public class WCSessionUpdate : JsonRpcRequest
     {
         public override string Method
         {
-            get { return "wc_sessionUpdate"; }
+            get { return WalletConnectStates.SessionUpdate; }
         }
-        
-        [JsonProperty("params")]
-        public WCSessionData[] parameters;
+
+        [JsonProperty("params")] public WCSessionData[] parameters;
 
         public WCSessionUpdate(WCSessionData data)
         {
-            this.parameters = new[] {data};
+            this.parameters = new[] { data };
         }
     }
+
 }

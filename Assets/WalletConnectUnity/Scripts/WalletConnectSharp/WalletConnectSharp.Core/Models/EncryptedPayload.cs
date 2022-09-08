@@ -1,5 +1,6 @@
 namespace WalletConnectSharp.Core.Models
 {
+
     public class EncryptedPayload
     {
         public string iv;
@@ -8,4 +9,5 @@ namespace WalletConnectSharp.Core.Models
 
         public string data;
     }
+
 }

@@ -14,7 +14,7 @@ public class WalletConnectActions : MonoBehaviour
         return results;
     }
 
-    public async Task<string> WalletSwitchEthChain(EthChain chainId)
+    public async Task<string> WalletSwitchEthChain(EthChainData chainId)
     {
 
         var results = await WalletConnect.ActiveSession.WalletSwitchEthChain(chainId);

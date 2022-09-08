@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using WalletConnectSharp.Core;
@@ -41,7 +42,7 @@ public class DemoActions : WalletConnectActions
     
     public async void OnClickSwitchChain(){
         try{
-            var chainId = new EthChain();
+            var chainId = new EthChainData();
             chainId.chainId = "0x13881";
             var results = await WalletSwitchEthChain(chainId);
         } catch {

@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks.Sources;
 using Newtonsoft.Json;
 using WalletConnectSharp.Core.Events.Request;
 using WalletConnectSharp.Core.Events.Response;
 using WalletConnectSharp.Core.Models;
+using WalletConnectSharp.Core.Utils;
 
 namespace WalletConnectSharp.Core.Events
 {
-    public class EventDelegator : IDisposable
+
+    public class EventDelegator : DisposableBase
     {
         private Dictionary<string, List<IEventProvider>> Listeners = new Dictionary<string, List<IEventProvider>>();
 
@@ -16,22 +19,24 @@ namespace WalletConnectSharp.Core.Events
             ListenFor("response:" + id, callback);
         }
 
-        public void ListenForResponse<T>(object id, EventHandler<JsonRpcResponseEvent<T>> callback) where T : JsonRpcResponse
+        public void ListenForResponse<T>(object id, EventHandler<JsonRpcResponseEvent<T>> callback)
+            where T : JsonRpcResponse
         {
             ListenFor("response:" + id, callback);
         }
 
         public void ListenFor<T>(string eventId, EventHandler<GenericEvent<T>> callback)
-        {  
+        {
             EventManager<T, GenericEvent<T>>.Instance.EventTriggers[eventId] += callback;
 
             SubscribeProvider(eventId, EventFactory.Instance.ProviderFor<T>());
         }
-        
-        public void ListenFor<T>(string eventId, EventHandler<JsonRpcResponseEvent<T>> callback) where T : JsonRpcResponse
+
+        public void ListenFor<T>(string eventId, EventHandler<JsonRpcResponseEvent<T>> callback)
+            where T : JsonRpcResponse
         {
             EventManager<T, JsonRpcResponseEvent<T>>.Instance.EventTriggers[eventId] += callback;
-            
+
             SubscribeProvider(eventId, EventFactory.Instance.ProviderFor<T>());
         }
 
@@ -55,9 +60,10 @@ namespace WalletConnectSharp.Core.Events
             {
                 listProvider = Listeners[eventId];
             }
+
             listProvider.Add(provider);
         }
-        
+
         public bool Trigger<T>(string topic, T obj)
         {
             return Trigger(topic, JsonConvert.SerializeObject(obj));
@@ -73,7 +79,7 @@ namespace WalletConnectSharp.Core.Events
                 for (int i = 0; i < providerList.Count; i++)
                 {
                     var provider = providerList[i];
-                    
+
                     provider.PropagateEvent(topic, json);
                 }
 
@@ -83,7 +89,7 @@ namespace WalletConnectSharp.Core.Events
             return false;
         }
 
-        public void Dispose()
+        protected override void DisposeManaged()
         {
             Clear();
         }

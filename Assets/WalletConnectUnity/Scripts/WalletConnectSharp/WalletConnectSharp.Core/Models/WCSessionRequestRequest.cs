@@ -2,15 +2,15 @@ using Newtonsoft.Json;
 
 namespace WalletConnectSharp.Core.Models
 {
+
     public class WcSessionRequestRequest : JsonRpcRequest
     {
         public override string Method
         {
-            get { return "wc_sessionRequest"; }
+            get { return WalletConnectStates.SessionRequest; }
         }
 
-        [JsonProperty("params")]
-        public WcSessionRequestRequestParams[] parameters;
+        [JsonProperty("params")] public WcSessionRequestRequestParams[] parameters;
 
         public WcSessionRequestRequest(ClientMeta clientMeta, string clientId, int chainId = 1)
         {
@@ -32,4 +32,5 @@ namespace WalletConnectSharp.Core.Models
             public int chainId;
         }
     }
+
 }
